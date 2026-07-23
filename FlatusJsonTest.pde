@@ -30,9 +30,6 @@ void setup() {
     // Map raw data to screen coordinates
     float mappedX = map(rawX*zoomVal, minX, maxX, 50, width - 50);
     float mappedY = map(rawY, minY, maxY, height - 50, 50);
-    
-    xCoords.add(mappedX);
-    yCoords.add(mappedY);
    }
 }
 
@@ -50,7 +47,7 @@ void draw() {
   plotData();
   popMatrix();
   
-    ArrayList<Float> intersections = getVerticalIntersections(mouseX, xCoords, yCoords, xCoords.size());
+   // ArrayList<Float> intersections = getVerticalIntersections(mouseX, xCoords, yCoords, numVertices);
 
 }
 
@@ -139,7 +136,7 @@ void mouseWheel(MouseEvent event) {
     zoomVal += .01*zoomVal*scaleIntensity; // Increase variable
   }
 
-  zoomVal = constrain(zoomVal, 0.01, 20);
+  zoomVal = constrain(zoomVal, 0.01, 50);
 }
 void keyPressed() {
   if (key == CODED) {
@@ -166,15 +163,15 @@ void keyReleased() {
 }
 
 // Function to calculate all Y-values where a vertical line intersects the shape
-ArrayList<Float> getVerticalIntersections(float xLine, ArrayList<Float> polyX, ArrayList<Float> polyY, int numVerts) {
+ArrayList<Float> getVerticalIntersections(float xLine, float[] polyX, float[] polyY, int numVerts) {
   ArrayList<Float> hits = new ArrayList<Float>();
   
   for (int i = 0; i < numVerts; i++) {
     // Get the current edge endpoints
-    float x1 = polyX.get(i);
-    float y1 = polyY.get(i);
-    float x2 = polyX.get(i + 1) % numVerts; // Wraps back to the first vertex
-    float y2 = polyY.get(i + 1) % numVerts;
+    float x1 = polyX[i];
+    float y1 = polyY[i];
+    float x2 = polyX[(i + 1) % numVerts]; // Wraps back to the first vertex
+    float y2 = polyY[(i + 1) % numVerts];
     
     // Check if the vertical line's X falls strictly between the edge's X endpoints
     if ((x1 <= xLine && xLine <= x2) || (x2 <= xLine && xLine <= x1)) {
