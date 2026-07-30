@@ -30,7 +30,7 @@ void setup() {
   printArray(Serial.list());
 
   // Open the port you are using at the rate you want:
-  myPort = new Serial(this, Serial.list()[0], 9600);
+ // myPort = new Serial(this, Serial.list()[5], 9600);
 
   // Send a capital "A" out the serial port
   json = loadJSONObject("dump_1782907724291_1782821998.json");
@@ -59,6 +59,7 @@ void setup() {
 
 void draw() {
   lights();
+  
   background(255);
   d1.run();
   d2.run();
@@ -80,9 +81,6 @@ void draw() {
   strokeWeight(.5);
   line(mouseX, 0, mouseX, height);
 
-  // NEW: Calculate and draw the tracking ellipse on the line
-  //drawIntersectionEllipseMouse();
-  // drawIntersectionEllipsePlay();
 }
 
 void drawAxes() {
@@ -237,38 +235,3 @@ void keyReleased() {
     }
   }
 }
-
-/*// Tracks mouseX, adjusts for chart offset, and draws the ellipse
- void drawIntersectionEllipseMouse() {
- // Translate mouseX into chart-space coordinate system
- float targetXInChart = mouseX - chartOffset;
- 
- // Loop through graph coordinates to find where the targetX sits
- for (int i = 0; i < xCoords.size() - 1; i++) {
- float x1 = xCoords.get(i);
- float x2 = xCoords.get(i + 1);
- float y1 = yCoords.get(i);
- float y2 = yCoords.get(i + 1);
- 
- // Check if chart-space mouse position sits between these two vertices
- if ((x1 <= targetXInChart && targetXInChart <= x2) || (x2 <= targetXInChart && targetXInChart <= x1)) {
- if (x1 != x2) {
- // Linear interpolation formula to calculate exact Y crossing point
- float intersectingY = y1 + (y2 - y1) * (targetXInChart - x1) / (x2 - x1);
- 
- // Draw the tracking ellipse (drawn in screen space, matching crosshair)
- fill(0, 51, 153);
- noStroke();
- ellipse(mouseX, intersectingY, 12, 12);
- 
- // Print the intersection coordinates nearby
- fill(0);
- textSize(12);
- textAlign(LEFT, BOTTOM);
- text("Y: " + nf(intersectingY, 1, 2), mouseX + 10, intersectingY - 10);
- break; // Stop looking once the intersection segment is found
- }
- }
- }
- }
- */

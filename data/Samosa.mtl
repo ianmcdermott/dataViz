@@ -1,13 +1,14 @@
-#
-# Wavefront material file
-# Created in RealityCapture
-# Engine version v2.0.0.118105
-#
+# Blender MTL File: 'Samosa.blend'
+# Material Count: 1
 
 newmtl material
-Kd 1 1 1
-d 1
-Ns 0
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
 illum 1
-map_Kd tex_u1_v1_diffuse.jpg
-map_Bump tex_u1_v1_normal.jpg
+map_Bump E:\\Downloads\\Samosa\\tex_u1_v1_normal.jpg
+map_Kd E:\\Downloads\\Samosa\\tex_u1_v1_diffuse.jpg

@@ -1,5 +1,5 @@
 class Driver {
-  float playHeadX = 50;
+  float playHeadX = width/3;
   ArrayList<Float> xCoords = new ArrayList<>();
   ArrayList<Float> yCoords = new ArrayList<>();
   color c;
@@ -8,7 +8,7 @@ class Driver {
   JSONArray points;
   PShape model;
   PVector modelLoc;
-
+float prevYdata = 0;
   boolean motorOn = false;
 
   Driver(JSONArray points_, color c_, float tone, PShape model_, PVector modelLoc_, boolean motorOn_) {
@@ -34,12 +34,12 @@ class Driver {
   void run() {
     plotData();
     drawIntersectionEllipsePlay();
-    // displayModel();
+   // displayModel();
   }
 
   void displayModel() {
     pushMatrix();
-    translate(width / 2, height / 2, 0); // Move to center of screen
+    translate(modelLoc.x, modelLoc.y, -100); // Move to center of screen
     rotateY(0); // Spin the object around the Y-axis
 
     shape(model); // Display the 3D object
@@ -47,7 +47,7 @@ class Driver {
   }
   
   void pumpMotor(float pumpData){
-    myPort.write(pumpData);
+  //  myPort.write(str(pumpData));
   }
 
   void plotData() {
@@ -118,7 +118,10 @@ class Driver {
           fill(0, 51, 153);
           noStroke();
           ellipse(playHeadX, intersectingY, 12, 12);
-          float targetAmp = map(intersectingY, height - 50, 50, 0.0f, 1.0f);
+          if(motorOn) pumpMotor(intersectingY);
+          
+          prevYdata = lerp(prevYdata, intersectingY, .25);
+          float targetAmp = map(prevYdata, height - 50, 50, 0.0f, 1.0f);
 
           // 3. Apply the calculated amplitude to the Minim oscillator
           wave.setAmplitude(targetAmp);
