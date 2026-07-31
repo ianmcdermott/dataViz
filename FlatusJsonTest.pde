@@ -23,14 +23,16 @@ AudioOutput out;
 Summer mix;
 Driver d1, d2, d3, d4;
 Serial myPort;
+
 void setup() {
   size(2000, 1000);
-  samosa = loadShape("Samosa.obj");
+  //samosa = loadShape("Samosa.obj");
+  //ortho();
 
   printArray(Serial.list());
 
   // Open the port you are using at the rate you want:
- // myPort = new Serial(this, Serial.list()[5], 9600);
+  myPort = new Serial(this, Serial.list()[5], 115200);
 
   // Send a capital "A" out the serial port
   json = loadJSONObject("dump_1782907724291_1782821998.json");
@@ -49,22 +51,24 @@ void setup() {
   //  wave = new Oscil(440.0f, 0.0f, Waves.SINE);
   // wave.patch(out);
   color c = color(0, 204, 0);  // Define color 'c'
-  d1 = new Driver(points, c, 440.0f, samosa, new PVector(width*1/5, height/5), true);
+  d1 = new Driver(points, c, 440.0f, samosa, new PVector(width*1/5, height/5), false);
   d2 = new Driver(points2, 698.46f, samosa, new PVector(width*2/5, height/5), false);
-  d3 = new Driver(points3, 523.25, samosa, new PVector(width*3/5, height/5), false);
+  d3 = new Driver(points3, 523.25, samosa, new PVector(width*3/5, height/5), true);
   d4 = new Driver(points4, 880.0f, samosa, new PVector(width*4/5, height/5), false);
 
   mix.patch(out);
+  hint(DISABLE_STROKE_PERSPECTIVE);
+  hint(DISABLE_DEPTH_TEST);
 }
 
 void draw() {
-  lights();
+  //lights();
   
   background(255);
-  d1.run();
-  d2.run();
+  //d1.run();
+ // d2.run();
   d3.run();
-  d4.run();
+  //d4.run();
   // Clear coordinate arrays every frame before plotData populates them
   xCoords.clear();
   yCoords.clear();
